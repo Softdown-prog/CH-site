@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420">
+  <rect width="640" height="420" fill="#171b22"/>
+  <rect x="64" y="54" width="512" height="312" rx="24" fill="#242b35" stroke="#3a4655" stroke-width="4"/>
+  <path d="M320 112 424 292H216Z" fill="#65d48b" opacity=".82"/>
+  <circle cx="320" cy="212" r="42" fill="#e9f7ee"/>
+  <text x="320" y="336" text-anchor="middle" fill="#aeb8c5" font-family="system-ui, sans-serif" font-size="24">Softdown Assets</text>
+</svg>
