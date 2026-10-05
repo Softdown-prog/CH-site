@@ -1,0 +1,17 @@
+{
+  "id": "example-001",
+  "slug": "example-001",
+  "title": "Asset de exemplo",
+  "description": "Registro-modelo. Rascunhos não aparecem no site.",
+  "category": "Exemplo",
+  "tags": ["example"],
+  "preview": "/placeholders/asset-placeholder.svg",
+  "format": "PNG",
+  "width": 256,
+  "height": 256,
+  "directions": 1,
+  "footprint": "N/A",
+  "transparent": true,
+  "license": "Softdown Assets License",
+  "published": false
+}
