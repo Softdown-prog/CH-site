@@ -1,0 +1,54 @@
+---
+import "../../styles/global.css";
+import { getAssets } from "../../lib/assets";
+
+export function getStaticPaths() {
+  return getAssets().map((asset) => ({
+    params: { slug: asset.slug },
+    props: { asset },
+  }));
+}
+
+const { asset } = Astro.props;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={asset.description} />
+    <title>{asset.title} · Softdown Assets</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/">Softdown <span>Assets</span></a>
+        <nav class="nav"><a href="/">Biblioteca</a></nav>
+      </div>
+    </header>
+    <main>
+      <section class="asset-page">
+        <div class="asset-preview"><img src={asset.preview} alt={asset.title} /></div>
+        <div class="asset-info">
+          <div class="category">{asset.category}</div>
+          <h1>{asset.title}</h1>
+          <p>{asset.description}</p>
+          <div class="specs">
+            <div class="spec"><strong>Formato</strong>{asset.format}</div>
+            <div class="spec"><strong>Resolução</strong>{asset.width && asset.height ? `${asset.width}×${asset.height}` : "—"}</div>
+            <div class="spec"><strong>Direções</strong>{asset.directions ?? "—"}</div>
+            <div class="spec"><strong>Footprint</strong>{asset.footprint ?? "—"}</div>
+            <div class="spec"><strong>Transparência</strong>{asset.transparent ? "Sim" : "Não"}</div>
+            <div class="spec"><strong>Licença</strong>{asset.license}</div>
+          </div>
+          {asset.download ? (
+            <a class="download" href={asset.download} download>Baixar asset</a>
+          ) : (
+            <span class="download disabled">Download em preparação</span>
+          )}
+        </div>
+      </section>
+    </main>
+    <footer><div class="footer-inner">Softdown Assets · Asset original.</div></footer>
+  </body>
+</html>
