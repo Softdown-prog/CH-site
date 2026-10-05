@@ -1,0 +1,54 @@
+---
+import "../styles/global.css";
+import { getAssets } from "../lib/assets";
+
+const assets = getAssets();
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Assets originais para jogos criados com ferramentas procedurais Softdown." />
+    <title>Softdown Assets</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/">Softdown <span>Assets</span></a>
+        <nav class="nav"><a href="#assets">Assets</a><a href="#license">Licença</a></nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">Game assets originais</div>
+        <h1>Assets prontos para colocar no seu jogo.</h1>
+        <p>Biblioteca independente de assets 2D e pré-renderizados produzidos pelas ferramentas procedurais da Softdown. Downloads simples, informações técnicas claras e licença direta.</p>
+      </section>
+
+      <section id="assets">
+        <div class="section-title">
+          <h2>Biblioteca</h2>
+          <p>{assets.length} asset{assets.length === 1 ? "" : "s"} publicado{assets.length === 1 ? "" : "s"}</p>
+        </div>
+        {assets.length === 0 ? (
+          <div class="empty">O catálogo está pronto. O primeiro asset aparece aqui assim que for aprovado para publicação.</div>
+        ) : (
+          <div class="grid">
+            {assets.map((asset) => (
+              <a class="card" href={`/assets/${asset.slug}/`}>
+                <div class="card-image"><img src={asset.preview} alt={asset.title} loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="category">{asset.category}</div>
+                  <h3>{asset.title}</h3>
+                  <div class="meta">{asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}{asset.format}{asset.directions ? ` · ${asset.directions} direção${asset.directions > 1 ? "ões" : ""}` : ""}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
+    <footer id="license"><div class="footer-inner">© {new Date().getFullYear()} Softdown Assets · Conteúdo original produzido com ferramentas procedurais Softdown.</div></footer>
+  </body>
+</html>
