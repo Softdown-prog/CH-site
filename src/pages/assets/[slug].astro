@@ -22,8 +22,8 @@ const { asset } = Astro.props;
   <body>
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="/">Softdown <span>Assets</span></a>
-        <nav class="nav"><a href="/">Biblioteca</a></nav>
+        <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-text">Softdown <strong>Assets</strong></span></a><a class="button button-secondary" href="/#assets">← Biblioteca</a>
+
       </div>
     </header>
     <main>
@@ -38,7 +38,7 @@ const { asset } = Astro.props;
             <div class="spec"><strong>Resolução</strong>{asset.width && asset.height ? `${asset.width}×${asset.height}` : "—"}</div>
             <div class="spec"><strong>Direções</strong>{asset.directions ?? "—"}</div>
             <div class="spec"><strong>Footprint</strong>{asset.footprint ?? "—"}</div>
-            <div class="spec"><strong>Transparência</strong>{asset.transparent ? "Sim" : "Não"}</div>
+            <div class="spec"><strong>Transparência</strong>{asset.transparent === undefined ? "Não informada" : asset.transparent ? "Sim" : "Não"}</div>
             <div class="spec"><strong>Licença</strong>{asset.license}</div>
           </div>
           {asset.download ? (

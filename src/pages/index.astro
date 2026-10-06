@@ -3,7 +3,7 @@ import "../styles/global.css";
 import { getAssets } from "../lib/assets";
 
 const assets = getAssets();
-const featuredAssets = assets.slice(0, 6);
+const featuredAssets = assets;
 
 const categoryBlueprints = [
   { name: "Personagens", key: "personagens", description: "Sprites, personagens direcionais e animações para gameplay.", icon: "CHAR" },
@@ -14,12 +14,12 @@ const categoryBlueprints = [
   { name: "UI & Ícones", key: "ui", description: "Ícones e elementos visuais para interfaces de jogo.", icon: "UI" },
 ];
 
-const normalize = (value) => value.toLocaleLowerCase("pt-BR");
+const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
 const categories = categoryBlueprints.map((category) => ({
   ...category,
   count: assets.filter((asset) => {
     const haystack = [asset.category, ...(asset.tags ?? [])].map(normalize).join(" ");
-    return haystack.includes(category.key);
+    return haystack.includes(normalize(category.key));
   }).length,
 }));
 ---
@@ -36,6 +36,7 @@ const categories = categoryBlueprints.map((category) => ({
     <title>Softdown Assets — Assets originais para jogos</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="Softdown Assets — início">
@@ -48,11 +49,12 @@ const categories = categoryBlueprints.map((category) => ({
           <a href="#processo">Como funciona</a>
           <a href="#license">Licença</a>
         </nav>
+        <details class="mobile-menu"><summary>Menu</summary><nav aria-label="Navegação mobile"><a href="#categorias">Categorias</a><a href="#assets">Assets</a><a href="#processo">Como funciona</a><a href="#license">Licença</a></nav></details>
         <a class="header-cta" href="#assets">Explorar biblioteca</a>
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <section class="hero">
         <div class="hero-copy">
           <div class="eyebrow"><span></span> Game assets originais</div>
@@ -112,12 +114,12 @@ const categories = categoryBlueprints.map((category) => ({
 
         <div class="category-grid">
           {categories.map((category) => (
-            <a class="category-card" href="#assets">
-              <div class="category-icon">{category.icon}</div>
+            <a class="category-card" href="#assets" data-category={normalize(category.key)}>
+              <div class="category-icon" aria-hidden="true">{category.icon}</div>
               <div class="category-content">
                 <div class="category-title-row">
                   <h3>{category.name}</h3>
-                  <span>{category.count}</span>
+                  <span>{category.count > 0 ? `${category.count} ${category.count === 1 ? "disponível" : "disponíveis"}` : "Em preparação"}</span>
                 </div>
                 <p>{category.description}</p>
               </div>
@@ -131,11 +133,13 @@ const categories = categoryBlueprints.map((category) => ({
         <div class="section-heading">
           <div>
             <div class="section-kicker">Seleção Softdown</div>
-            <h2>Assets em destaque.</h2>
+            <h2>Explore a biblioteca.</h2>
           </div>
           <p>{assets.length} asset{assets.length === 1 ? "" : "s"} publicado{assets.length === 1 ? "" : "s"} no catálogo.</p>
         </div>
 
+        {assets.length > 0 && <form class="catalog-controls" role="search"><label for="asset-search">Buscar assets<input id="asset-search" type="search" placeholder="Nome, categoria ou tag" /></label><label for="asset-category">Categoria<select id="asset-category"><option value="">Todas as categorias</option>{categories.map(category => <option value={normalize(category.key)}>{category.name}</option>)}</select></label><button class="button button-secondary" type="reset">Limpar filtros</button></form>}
+        <p id="filter-status" role="status" hidden></p>
         {featuredAssets.length === 0 ? (
           <div class="catalog-empty">
             <div class="catalog-empty-visual">
@@ -147,22 +151,22 @@ const categories = categoryBlueprints.map((category) => ({
               <div class="section-kicker">Curadoria em andamento</div>
               <h3>O catálogo está sendo preparado.</h3>
               <p>
-                A estrutura da biblioteca já está pronta. O primeiro asset real só será publicado depois de passar pela seleção e pelo pacote final de entrega.
+                Estamos selecionando os primeiros pacotes. Cada asset terá preview, especificações e arquivos organizados antes de aparecer aqui.
               </p>
             </div>
           </div>
         ) : (
           <div class="grid asset-grid-home">
             {featuredAssets.map((asset) => (
-              <a class="card" href={`/assets/${asset.slug}/`}>
-                <div class="card-image"><img src={asset.preview} alt={asset.title} loading="lazy" /></div>
+              <a class="card" href={`/assets/${asset.slug}/`} data-search={normalize([asset.title, asset.category, ...asset.tags].join(" "))} data-category={normalize([asset.category, ...asset.tags].join(" "))}>
+                <div class="card-image"><img src={asset.preview} alt={asset.title} loading="lazy" decoding="async" /></div>
                 <div class="card-body">
                   <div class="category">{asset.category}</div>
                   <h3>{asset.title}</h3>
                   <div class="meta">
                     {asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}
                     {asset.format}
-                    {asset.directions ? ` · ${asset.directions} direção${asset.directions > 1 ? "ões" : ""}` : ""}
+                    {asset.directions ? ` · ${asset.directions} ${asset.directions === 1 ? "direção" : "direções"}` : ""}
                   </div>
                 </div>
               </a>
@@ -174,9 +178,9 @@ const categories = categoryBlueprints.map((category) => ({
       <section class="home-section process-section" id="processo">
         <div class="process-intro">
           <div class="section-kicker">Produção própria</div>
-          <h2>Feitos por pipeline, não por improviso.</h2>
+          <h2>Da criação ao pacote pronto.</h2>
           <p>
-            As ferramentas da Softdown foram criadas durante a produção de jogos e trabalham com contratos de câmera, direção, escala, spritesheet, máscaras e validação técnica.
+            Nossas ferramentas nasceram durante o desenvolvimento de jogos. Cada pacote é revisado para manter câmera, escala, direções e transparência consistentes.
           </p>
         </div>
 
@@ -239,5 +243,31 @@ const categories = categoryBlueprints.map((category) => ({
         </div>
       </div>
     </footer>
+    <script>
+      const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
+      const search = document.querySelector<HTMLInputElement>("#asset-search");
+      const category = document.querySelector<HTMLSelectElement>("#asset-category");
+      const status = document.querySelector<HTMLElement>("#filter-status");
+      const cards = Array.from(document.querySelectorAll<HTMLElement>(".card[data-search]"));
+      function filterAssets() {
+        if (!search || !category || !status) return;
+        const terms = normalize(search.value).trim().split(/\s+/).filter(Boolean);
+        let visible = 0;
+        cards.forEach(card => {
+          card.hidden = !terms.every(term => card.dataset.search?.includes(term)) || !card.dataset.category?.includes(category.value);
+          if (!card.hidden) visible++;
+        });
+        status.hidden = false;
+        status.textContent = visible ? `${visible} ${visible === 1 ? "asset encontrado" : "assets encontrados"}.` : "Nenhum asset encontrado. Tente outra busca ou limpe os filtros.";
+      }
+      search?.addEventListener("input", filterAssets);
+      category?.addEventListener("change", filterAssets);
+      document.querySelector(".catalog-controls")?.addEventListener("submit", event => event.preventDefault());
+      document.querySelector(".catalog-controls")?.addEventListener("reset", () => { if (search && category) { search.value = ""; category.value = ""; filterAssets(); } });
+      document.querySelectorAll<HTMLElement>(".category-card").forEach(link => link.addEventListener("click", () => {
+        if (category) { category.value = link.dataset.category ?? ""; filterAssets(); }
+      }));
+      document.querySelectorAll(".mobile-menu a").forEach(link => link.addEventListener("click", () => document.querySelector(".mobile-menu")?.removeAttribute("open")));
+    </script>
   </body>
 </html>
