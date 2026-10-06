@@ -1,0 +1,150 @@
+name: Publish approved street tree
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-approved-street-tree.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download approved Forge 2D output
+        env:
+          SOURCE_URL: 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-a2ac-820e-9b40-56db80d83b0a/raw?se=2026-10-06T17%3A37%3A36Z&sp=r&sv=2026-02-06&sr=b&scid=f067b7c4-c410-508f-887f-8d6f09e7c045&skoid=bdd24bd8-9af5-4138-bfb1-19fba97a8611&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-06T17%3A19%3A02Z&ske=2026-10-07T17%3A19%3A02Z&sks=b&skv=2026-02-06&sig=uiu1awOuQJleNURuZNSgT93kxvBpNTv3HxVHVt8fE7o%3D'
+        run: |
+          curl -L --fail --retry 2 "$SOURCE_URL" -o /tmp/tree-source.zip
+          mkdir -p /tmp/tree-source
+          unzip -q /tmp/tree-source.zip -d /tmp/tree-source
+          test -f /tmp/tree-source/street_tree_dense_lanceolate_01_south.png
+          test -f /tmp/tree-source/street_tree_dense_lanceolate_01_west.png
+          test -f /tmp/tree-source/street_tree_dense_lanceolate_01_north.png
+          test -f /tmp/tree-source/street_tree_dense_lanceolate_01_east.png
+          test -f /tmp/tree-source/street_tree_dense_lanceolate_01_south_technical_sheet.png
+
+      - name: Build public asset package
+        run: |
+          mkdir -p public/previews public/downloads src/data/assets /tmp/tree-package
+          cp /tmp/tree-source/street_tree_dense_lanceolate_01_south_technical_sheet.png \
+            public/previews/street_tree_dense_lanceolate_01.png
+
+          for dir in south west north east; do
+            cp "/tmp/tree-source/street_tree_dense_lanceolate_01_${dir}.png" /tmp/tree-package/
+          done
+
+          cat > /tmp/tree-package/README.md <<'EOF'
+          # Árvore urbana de copa densa 01
+
+          Asset 2D procedural original produzido com o A7 Forge 2D a partir de uma referência fotográfica própria.
+
+          Conteúdo:
+          - SOUTH, WEST, NORTH e EAST em PNG RGBA transparente;
+          - canvas 256x320;
+          - câmera CH_CAMERA_V1;
+          - tile de referência 128x64.
+
+          O preview técnico mostrado no site é apenas uma ficha de validação sobre grid sintético, não uma captura do runtime.
+          EOF
+
+          cat > /tmp/tree-package/LICENSE.txt <<'EOF'
+          SOFTDOWN ASSETS FREE LICENSE v1.0
+
+          Copyright (c) 2026 Softdown.
+
+          É permitido usar e modificar gratuitamente os arquivos deste pacote em projetos pessoais e comerciais, incluindo jogos, aplicativos, vídeos e sites.
+
+          É permitido distribuir o asset quando incorporado a um projeto final.
+
+          Não é permitido revender, sublicenciar ou redistribuir os arquivos deste pacote, originais ou modificados, como asset isolado, pacote de assets, template ou coleção concorrente.
+
+          Crédito é apreciado, mas não obrigatório.
+
+          Os arquivos são fornecidos "como estão", sem garantia de compatibilidade com engines, ferramentas ou projetos específicos.
+          EOF
+
+          cat > /tmp/tree-package/metadata.json <<'EOF'
+          {
+            "id": "street_tree_dense_lanceolate_01",
+            "title": "Árvore urbana de copa densa 01",
+            "format": "PNG RGBA",
+            "canvas": [256, 320],
+            "directions": ["south", "west", "north", "east"],
+            "cameraContract": "CH_CAMERA_V1",
+            "tile": [128, 64],
+            "transparent": true,
+            "origin": "Original procedural asset generated from an owned real-world photo reference.",
+            "pipeline": "A7 Forge 2D / CH_2D_ORGANIC_SCENERY_V1"
+          }
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          root = Path('/tmp/tree-package')
+          out = Path('public/downloads/street_tree_dense_lanceolate_01.zip')
+          with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for p in sorted(root.iterdir()):
+                  z.write(p, p.name)
+          PY
+
+          cat > src/data/assets/street_tree_dense_lanceolate_01.json <<'EOF'
+          {
+            "id": "street_tree_dense_lanceolate_01",
+            "slug": "arvore-urbana-copa-densa-01",
+            "title": "Árvore urbana de copa densa",
+            "description": "Árvore 2D procedural original com copa larga e densa, folhas alongadas e quatro direções. Criada a partir de referência fotográfica própria e preparada para uso em jogos.",
+            "category": "Vegetação",
+            "tags": ["árvore", "vegetação", "procedural", "4 direções", "2D"],
+            "preview": "/previews/street_tree_dense_lanceolate_01.png",
+            "download": "/downloads/street_tree_dense_lanceolate_01.zip",
+            "format": "PNG + JSON",
+            "width": 256,
+            "height": 320,
+            "directions": 4,
+            "footprint": "N/A",
+            "transparent": true,
+            "license": "Softdown Assets Free License v1.0",
+            "published": true
+          }
+          EOF
+
+      - name: Validate package
+        run: |
+          test -s public/previews/street_tree_dense_lanceolate_01.png
+          test -s public/downloads/street_tree_dense_lanceolate_01.zip
+          python - <<'PY'
+          import json, zipfile
+          from pathlib import Path
+          json.loads(Path('src/data/assets/street_tree_dense_lanceolate_01.json').read_text())
+          with zipfile.ZipFile('public/downloads/street_tree_dense_lanceolate_01.zip') as z:
+              names=set(z.namelist())
+          required={
+              'street_tree_dense_lanceolate_01_south.png',
+              'street_tree_dense_lanceolate_01_west.png',
+              'street_tree_dense_lanceolate_01_north.png',
+              'street_tree_dense_lanceolate_01_east.png',
+              'README.md','LICENSE.txt','metadata.json'
+          }
+          assert required <= names
+          PY
+
+      - name: Commit published asset
+        run: |
+          git config user.name "Softdown Assets Publisher"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/previews/street_tree_dense_lanceolate_01.png \
+                  public/downloads/street_tree_dense_lanceolate_01.zip \
+                  src/data/assets/street_tree_dense_lanceolate_01.json
+          if git diff --cached --quiet; then
+            echo "Asset already published."
+            exit 0
+          fi
+          git commit -m "feat: publish dense urban tree asset"
+          git push origin HEAD:main
