@@ -1,0 +1,18 @@
+{
+  "id": "street_tree_dense_lanceolate_01",
+  "slug": "arvore-urbana-copa-densa-01",
+  "title": "Árvore urbana de copa densa",
+  "description": "Árvore 2D procedural original com copa larga e densa, folhas alongadas e quatro direções. Criada a partir de referência fotográfica própria e preparada para uso em jogos.",
+  "category": "Vegetação",
+  "tags": ["árvore", "vegetação", "procedural", "4 direções", "2D"],
+  "preview": "/previews/street_tree_dense_lanceolate_01.png",
+  "download": "/downloads/street_tree_dense_lanceolate_01.zip",
+  "format": "PNG + JSON",
+  "width": 256,
+  "height": 320,
+  "directions": 4,
+  "footprint": "N/A",
+  "transparent": true,
+  "license": "Softdown Assets Free License v1.0",
+  "published": true
+}
