@@ -3,52 +3,241 @@ import "../styles/global.css";
 import { getAssets } from "../lib/assets";
 
 const assets = getAssets();
+const featuredAssets = assets.slice(0, 6);
+
+const categoryBlueprints = [
+  { name: "Personagens", key: "personagens", description: "Sprites, personagens direcionais e animações para gameplay.", icon: "CHAR" },
+  { name: "Construções", key: "construções", description: "Prédios, atrações e estruturas pré-renderizadas.", icon: "BLDG" },
+  { name: "Vegetação", key: "vegetação", description: "Árvores, arbustos e elementos naturais prontos para cenário.", icon: "NAT" },
+  { name: "Tiles & Terreno", key: "tiles", description: "Pisos, caminhos, terreno e módulos para mapas.", icon: "TILE" },
+  { name: "Props", key: "props", description: "Objetos de cena, decoração e elementos utilitários.", icon: "PROP" },
+  { name: "UI & Ícones", key: "ui", description: "Ícones e elementos visuais para interfaces de jogo.", icon: "UI" },
+];
+
+const normalize = (value) => value.toLocaleLowerCase("pt-BR");
+const categories = categoryBlueprints.map((category) => ({
+  ...category,
+  count: assets.filter((asset) => {
+    const haystack = [asset.category, ...(asset.tags ?? [])].map(normalize).join(" ");
+    return haystack.includes(category.key);
+  }).length,
+}));
 ---
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Assets originais para jogos criados com ferramentas procedurais Softdown." />
-    <title>Softdown Assets</title>
+    <meta
+      name="description"
+      content="Assets originais para jogos produzidos com ferramentas procedurais da Softdown. Sprites, construções, vegetação, tiles e mais."
+    />
+    <meta name="theme-color" content="#0a0f14" />
+    <title>Softdown Assets — Assets originais para jogos</title>
   </head>
   <body>
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="/">Softdown <span>Assets</span></a>
-        <nav class="nav"><a href="#assets">Assets</a><a href="#license">Licença</a></nav>
+        <a class="brand" href="/" aria-label="Softdown Assets — início">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-text">Softdown <strong>Assets</strong></span>
+        </a>
+        <nav class="nav" aria-label="Navegação principal">
+          <a href="#categorias">Categorias</a>
+          <a href="#assets">Assets</a>
+          <a href="#processo">Como funciona</a>
+          <a href="#license">Licença</a>
+        </nav>
+        <a class="header-cta" href="#assets">Explorar biblioteca</a>
       </div>
     </header>
+
     <main>
       <section class="hero">
-        <div class="eyebrow">Game assets originais</div>
-        <h1>Assets prontos para colocar no seu jogo.</h1>
-        <p>Biblioteca independente de assets 2D e pré-renderizados produzidos pelas ferramentas procedurais da Softdown. Downloads simples, informações técnicas claras e licença direta.</p>
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> Game assets originais</div>
+          <h1>Assets prontos para entrar no seu jogo.</h1>
+          <p class="hero-lead">
+            Sprites, construções, vegetação, tiles e props produzidos com ferramentas procedurais próprias da Softdown — organizados para uso real em desenvolvimento de jogos.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#assets">Explorar assets</a>
+            <a class="button button-secondary" href="#processo">Conhecer o processo</a>
+          </div>
+          <div class="hero-notes" aria-label="Características do catálogo">
+            <span>PNG transparente</span>
+            <span>Informações técnicas</span>
+            <span>Download direto</span>
+          </div>
+        </div>
+
+        <div class="hero-stage" aria-hidden="true">
+          <div class="stage-grid"></div>
+          <div class="stage-card stage-card-main">
+            <div class="stage-topline">
+              <span class="stage-badge">ASSET READY</span>
+              <span class="stage-dots">•••</span>
+            </div>
+            <div class="stage-asset">
+              <div class="isometric-diamond diamond-back"></div>
+              <div class="isometric-diamond diamond-mid"></div>
+              <div class="asset-tree">
+                <span class="tree-crown crown-one"></span>
+                <span class="tree-crown crown-two"></span>
+                <span class="tree-crown crown-three"></span>
+                <span class="tree-trunk"></span>
+              </div>
+            </div>
+            <div class="stage-footer">
+              <div>
+                <small>PIPELINE</small>
+                <strong>Softdown Procedural</strong>
+              </div>
+              <span>PNG · 4 DIR</span>
+            </div>
+          </div>
+          <div class="stage-card stage-card-small stage-card-left"><span>2D</span><strong>Sprites</strong></div>
+          <div class="stage-card stage-card-small stage-card-right"><span>3D → 2D</span><strong>Pre-render</strong></div>
+        </div>
       </section>
 
-      <section id="assets">
-        <div class="section-title">
-          <h2>Biblioteca</h2>
-          <p>{assets.length} asset{assets.length === 1 ? "" : "s"} publicado{assets.length === 1 ? "" : "s"}</p>
+      <section class="home-section" id="categorias">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Biblioteca organizada</div>
+            <h2>Encontre pelo tipo de asset.</h2>
+          </div>
+          <p>Categorias pensadas para quem precisa montar um jogo, não apenas colecionar imagens.</p>
         </div>
-        {assets.length === 0 ? (
-          <div class="empty">O catálogo está pronto. O primeiro asset aparece aqui assim que for aprovado para publicação.</div>
+
+        <div class="category-grid">
+          {categories.map((category) => (
+            <a class="category-card" href="#assets">
+              <div class="category-icon">{category.icon}</div>
+              <div class="category-content">
+                <div class="category-title-row">
+                  <h3>{category.name}</h3>
+                  <span>{category.count}</span>
+                </div>
+                <p>{category.description}</p>
+              </div>
+              <span class="category-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="home-section library-section" id="assets">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Seleção Softdown</div>
+            <h2>Assets em destaque.</h2>
+          </div>
+          <p>{assets.length} asset{assets.length === 1 ? "" : "s"} publicado{assets.length === 1 ? "" : "s"} no catálogo.</p>
+        </div>
+
+        {featuredAssets.length === 0 ? (
+          <div class="catalog-empty">
+            <div class="catalog-empty-visual">
+              <span class="empty-orbit orbit-one"></span>
+              <span class="empty-orbit orbit-two"></span>
+              <span class="empty-core">S</span>
+            </div>
+            <div>
+              <div class="section-kicker">Curadoria em andamento</div>
+              <h3>O catálogo está sendo preparado.</h3>
+              <p>
+                A estrutura da biblioteca já está pronta. O primeiro asset real só será publicado depois de passar pela seleção e pelo pacote final de entrega.
+              </p>
+            </div>
+          </div>
         ) : (
-          <div class="grid">
-            {assets.map((asset) => (
+          <div class="grid asset-grid-home">
+            {featuredAssets.map((asset) => (
               <a class="card" href={`/assets/${asset.slug}/`}>
                 <div class="card-image"><img src={asset.preview} alt={asset.title} loading="lazy" /></div>
                 <div class="card-body">
                   <div class="category">{asset.category}</div>
                   <h3>{asset.title}</h3>
-                  <div class="meta">{asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}{asset.format}{asset.directions ? ` · ${asset.directions} direção${asset.directions > 1 ? "ões" : ""}` : ""}</div>
+                  <div class="meta">
+                    {asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}
+                    {asset.format}
+                    {asset.directions ? ` · ${asset.directions} direção${asset.directions > 1 ? "ões" : ""}` : ""}
+                  </div>
                 </div>
               </a>
             ))}
           </div>
         )}
       </section>
+
+      <section class="home-section process-section" id="processo">
+        <div class="process-intro">
+          <div class="section-kicker">Produção própria</div>
+          <h2>Feitos por pipeline, não por improviso.</h2>
+          <p>
+            As ferramentas da Softdown foram criadas durante a produção de jogos e trabalham com contratos de câmera, direção, escala, spritesheet, máscaras e validação técnica.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card">
+            <span class="process-number">01</span>
+            <h3>Gerado</h3>
+            <p>O asset nasce de receitas e ferramentas procedurais próprias.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-number">02</span>
+            <h3>Validado</h3>
+            <p>Direção, escala, transparência e estrutura são verificadas antes da publicação.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-number">03</span>
+            <h3>Empacotado</h3>
+            <p>Preview, arquivos finais e informações técnicas ficam organizados para download.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-section license-panel" id="license">
+        <div>
+          <div class="section-kicker">Uso simples</div>
+          <h2>Baixe, entenda o pacote e use no seu projeto.</h2>
+          <p>
+            Cada página mostra formato, resolução, direções, transparência e demais informações relevantes antes do download. A licença final será publicada junto do primeiro pacote comercial.
+          </p>
+        </div>
+        <div class="license-points">
+          <span><strong>01</strong> Preview claro</span>
+          <span><strong>02</strong> Especificação técnica</span>
+          <span><strong>03</strong> Pacote organizado</span>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div>
+          <div class="section-kicker">Softdown Assets</div>
+          <h2>Uma biblioteca feita para entrar no pipeline do jogo.</h2>
+        </div>
+        <a class="button button-primary" href="#assets">Ver biblioteca</a>
+      </section>
     </main>
-    <footer id="license"><div class="footer-inner">© {new Date().getFullYear()} Softdown Assets · Conteúdo original produzido com ferramentas procedurais Softdown.</div></footer>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <a class="brand footer-brand" href="/">
+            <span class="brand-mark">S</span>
+            <span class="brand-text">Softdown <strong>Assets</strong></span>
+          </a>
+          <p>Assets originais produzidos com ferramentas procedurais Softdown.</p>
+        </div>
+        <div class="footer-meta">
+          <span>© {new Date().getFullYear()} Softdown Assets</span>
+          <a href="#license">Licença</a>
+          <a href="#categorias">Categorias</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
