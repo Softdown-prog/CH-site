@@ -24,6 +24,7 @@ Arquivos principais:
 
 - `src/pages/index.astro` — página inicial
 - `src/pages/sobre-nos.astro` — página Sobre nós; explica a origem das ferramentas próprias e a distribuição gratuita de outputs procedurais não usados nos projetos
+- `src/pages/arte-procedural.astro` — página educativa pública sobre arte procedural, workers, coerência visual e tecnologias usadas, sem expor segredos internos do pipeline
 - `src/styles/global.css` — sistema visual atual
 - `src/pages/assets/[slug].astro` — página individual
 - `src/lib/assets.ts` — leitura e filtragem do catálogo
