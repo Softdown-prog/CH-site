@@ -2,6 +2,8 @@
 
 Catálogo estático de assets originais da Softdown, construído com Astro e preparado para hospedagem no Cloudflare Pages.
 
+> Para retomar este projeto em outro chat, leia primeiro [CONTINUATION.md](./CONTINUATION.md).
+
 ## Desenvolvimento
 
 ```bash
