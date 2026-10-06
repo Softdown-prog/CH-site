@@ -479,3 +479,16 @@ section[id], #main-content { scroll-margin-top: 96px; }
   .card:hover, .category-card:hover, .process-card:hover,
   .card:hover .card-image img, .category-card:hover .category-arrow { transform: none; }
 }
+
+/* Entrance motion stays independent of hover transforms. */
+.reveal-pending { opacity: 0; translate: 0 22px; }
+.reveal-visible {
+  animation: card-reveal .6s cubic-bezier(.2, .7, .2, 1) var(--reveal-delay, 0ms) backwards;
+}
+@keyframes card-reveal {
+  from { opacity: 0; translate: 0 22px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-pending, .reveal-visible { opacity: 1; translate: none; animation: none; }
+}

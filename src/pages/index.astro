@@ -244,6 +244,37 @@ const categories = categoryBlueprints.map((category) => ({
       </div>
     </footer>
     <script>
+      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (!motionPreference.matches && "IntersectionObserver" in window) {
+        const groups = document.querySelectorAll<HTMLElement>(".category-grid, .asset-grid-home, .process-grid");
+        const reveal = (group: HTMLElement) => {
+          group.querySelectorAll<HTMLElement>(".reveal-pending").forEach(card => {
+            card.classList.remove("reveal-pending");
+            card.classList.add("reveal-visible");
+          });
+        };
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            reveal(entry.target as HTMLElement);
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0, rootMargin: "0px 0px -32px 0px" });
+        groups.forEach(group => {
+          Array.from(group.children).forEach((child, index) => {
+            const card = child as HTMLElement;
+            card.style.setProperty("--reveal-delay", `${Math.min(index, 5) * 90}ms`);
+            card.classList.add("reveal-pending");
+            card.addEventListener("focusin", () => reveal(group));
+          });
+          observer.observe(group);
+        });
+        motionPreference.addEventListener("change", () => {
+          if (!motionPreference.matches) return;
+          groups.forEach(reveal);
+          observer.disconnect();
+        });
+      }
       const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
       const search = document.querySelector<HTMLInputElement>("#asset-search");
       const category = document.querySelector<HTMLSelectElement>("#asset-category");
