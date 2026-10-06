@@ -1,0 +1,259 @@
+---
+import "../styles/global.css";
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Entenda o que é arte procedural, como regras, código e workers ajudam a criar assets coerentes para jogos e como a Softdown usa esse conceito sem expor detalhes internos do pipeline."
+    />
+    <meta name="theme-color" content="#0a0f14" />
+    <title>O que é arte procedural — Softdown Assets</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Softdown Assets — início">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-text">Softdown <strong>Assets</strong></span>
+        </a>
+
+        <nav class="nav" aria-label="Navegação principal">
+          <a href="/#categorias">Categorias</a>
+          <a href="/#assets">Assets</a>
+          <a class="nav-current" href="/arte-procedural/" aria-current="page">Procedural</a>
+          <a href="/sobre-nos/">Sobre nós</a>
+        </nav>
+
+        <details class="mobile-menu">
+          <summary>Menu</summary>
+          <nav aria-label="Navegação mobile">
+            <a href="/#categorias">Categorias</a>
+            <a href="/#assets">Assets</a>
+            <a href="/arte-procedural/" aria-current="page">Procedural</a>
+            <a href="/sobre-nos/">Sobre nós</a>
+          </nav>
+        </details>
+
+        <a class="header-cta" href="/#assets">Explorar biblioteca</a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="procedural-hero">
+        <div class="procedural-hero-copy">
+          <div class="eyebrow"><span></span> Arte procedural</div>
+          <h1>Desenhar com regras, código e intenção.</h1>
+          <p>
+            Em arte procedural, o resultado não nasce somente de um desenho feito à mão. Ele nasce de um conjunto de regras, parâmetros, formas, materiais e decisões que podem ser executados e combinados por software.
+          </p>
+        </div>
+
+        <div class="procedural-machine" aria-label="Exemplo conceitual de um fluxo procedural">
+          <div class="machine-node">
+            <small>ENTRADA</small>
+            <strong>Regras + parâmetros</strong>
+          </div>
+          <span>→</span>
+          <div class="machine-node machine-node-accent">
+            <small>PROCESSO</small>
+            <strong>Código + workers</strong>
+          </div>
+          <span>→</span>
+          <div class="machine-node">
+            <small>SAÍDA</small>
+            <strong>Asset</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="procedural-section">
+        <div class="procedural-heading">
+          <div class="section-kicker">O conceito</div>
+          <h2>Procedural não significa “aleatório”.</h2>
+          <p>
+            Um sistema procedural usa regras para produzir resultados. Algumas regras podem incluir variação ou sementes aleatórias, mas o objetivo é manter o resultado dentro de limites definidos. Em jogos, isso pode ser usado para criar terrenos, vegetação, texturas, construções, efeitos, personagens, animações e muitos outros elementos.
+          </p>
+        </div>
+
+        <div class="procedural-compare">
+          <article>
+            <span>DESENHO DIRETO</span>
+            <h3>O artista define cada detalhe.</h3>
+            <p>Uma imagem pode ser desenhada manualmente, pixel por pixel, linha por linha ou elemento por elemento.</p>
+          </article>
+          <article>
+            <span>DESENHO PROCEDURAL</span>
+            <h3>O artista também define o sistema.</h3>
+            <p>Parte do trabalho passa a ser construir as regras que dizem ao software como montar, variar e validar o desenho.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="procedural-section">
+        <div class="procedural-heading">
+          <div class="section-kicker">Um pouco de história</div>
+          <h2>A ideia é mais antiga do que a própria indústria moderna de jogos.</h2>
+          <p>
+            Computação gráfica sempre procurou maneiras de representar formas complexas através de matemática e algoritmos. Com o crescimento dos jogos eletrônicos, técnicas procedurais passaram a ser usadas para economizar memória, criar mundos maiores e gerar variações sem armazenar manualmente cada possibilidade.
+          </p>
+        </div>
+
+        <div class="history-line">
+          <article>
+            <span>01</span>
+            <strong>Matemática e algoritmos</strong>
+            <p>Formas, curvas, ruído, fractais e regras geométricas permitiram descrever visualmente coisas complexas através de código.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <strong>Jogos e limitações</strong>
+            <p>Quando memória e armazenamento eram muito menores, gerar conteúdo por regra podia ser mais eficiente do que guardar tudo pronto.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <strong>Ferramentas modernas</strong>
+            <p>Hoje procedural também é usado para consistência, velocidade de produção, variações controladas e integração com pipelines completos.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="procedural-section procedural-code-section">
+        <div class="procedural-heading">
+          <div class="section-kicker">Como fazemos</div>
+          <h2>Código descreve o que deve acontecer. Ferramentas executam.</h2>
+          <p>
+            Sem expor detalhes internos do nosso pipeline, podemos dizer que as ferramentas Softdown combinam tecnologias comuns de desenvolvimento e computação gráfica para transformar regras em resultados visuais.
+          </p>
+        </div>
+
+        <div class="code-stack">
+          <article>
+            <div class="code-chip">C++</div>
+            <h3>Estrutura e ferramentas</h3>
+            <p>Usado em partes de ferramentas e lógica de produção onde controle, desempenho e processamento de imagem são importantes.</p>
+          </article>
+          <article>
+            <div class="code-chip">Python</div>
+            <h3>Automação</h3>
+            <p>Ajuda a conectar etapas, executar tarefas, preparar receitas, processar arquivos e controlar ferramentas externas.</p>
+          </article>
+          <article>
+            <div class="code-chip">Blender</div>
+            <h3>Geometria e pré-render</h3>
+            <p>Quando volume, câmera, iluminação ou animação 3D ajudam, o Blender pode fazer parte do processo antes da saída 2D.</p>
+          </article>
+          <article>
+            <div class="code-chip">JSON</div>
+            <h3>Receitas e contratos</h3>
+            <p>Parâmetros estruturados ajudam diferentes etapas a entender o que deve ser produzido sem depender de instruções vagas.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="procedural-section workers-section">
+        <div class="workers-copy">
+          <div class="section-kicker">Workers</div>
+          <h2>Um worker é um especialista dentro do processo.</h2>
+          <p>
+            Em vez de uma única ferramenta tentar fazer tudo, um pipeline pode dividir o trabalho. Um worker recebe uma tarefa bem definida, executa aquela responsabilidade e entrega seu resultado para a próxima etapa.
+          </p>
+          <p>
+            Um worker pode, por exemplo, gerar uma forma, preparar uma direção, validar dimensões, montar um spritesheet, processar transparência ou criar um preview. Isso torna o processo mais organizado e permite corrigir apenas a etapa que falhou.
+          </p>
+        </div>
+
+        <div class="worker-map" aria-label="Exemplo conceitual de workers">
+          <div><span>01</span><strong>Gerar</strong><small>formas e variações</small></div>
+          <div><span>02</span><strong>Validar</strong><small>regras e consistência</small></div>
+          <div><span>03</span><strong>Processar</strong><small>imagem e formatos</small></div>
+          <div><span>04</span><strong>Empacotar</strong><small>entrega final</small></div>
+        </div>
+      </section>
+
+      <section class="procedural-section coherence-section">
+        <div class="procedural-heading">
+          <div class="section-kicker">Coerência de mundo</div>
+          <h2>Um asset pode ser bom e ainda assim não pertencer a um jogo.</h2>
+          <p>
+            Jogos precisam parecer mundos, não coleções de imagens desconectadas. Câmera, proporção, escala, iluminação, contraste, materiais, paleta e nível de detalhe precisam conversar entre si.
+          </p>
+        </div>
+
+        <div class="coherence-grid">
+          <article>
+            <strong>Câmera</strong>
+            <p>Se um asset usa perspectiva ou ângulo incompatível, ele pode parecer inclinado ou deslocado mesmo sendo bonito isoladamente.</p>
+          </article>
+          <article>
+            <strong>Escala</strong>
+            <p>Uma árvore, pessoa ou construção precisa fazer sentido ao lado dos demais elementos do mundo.</p>
+          </article>
+          <article>
+            <strong>Estilo</strong>
+            <p>Detalhe, contorno, textura e iluminação precisam manter uma linguagem visual comum.</p>
+          </article>
+          <article>
+            <strong>Função</strong>
+            <p>O asset também precisa funcionar no jogo: encaixe, leitura, animação, direção e área ocupada importam.</p>
+          </article>
+        </div>
+
+        <aside class="coherence-note">
+          <span class="section-kicker">Por isso existe a biblioteca</span>
+          <strong>Nem todo bom output entra no projeto que o gerou.</strong>
+          <p>
+            Às vezes um teste produz um resultado interessante, mas ele não combina com a linguagem visual ou com as regras daquele jogo. Quando ainda é útil e apresentável, ele pode ser preparado para distribuição gratuita aqui.
+          </p>
+        </aside>
+      </section>
+
+      <section class="procedural-section procedural-use">
+        <div>
+          <div class="section-kicker">Para que isso serve</div>
+          <h2>Procedural é uma forma de ampliar o trabalho humano, não de eliminar decisão artística.</h2>
+          <p>
+            O sistema ajuda a repetir tarefas, testar variações, manter contratos técnicos e produzir famílias coerentes. Mas alguém ainda precisa decidir o que é bom, o que pertence ao projeto, o que deve ser corrigido e o que deve ser descartado.
+          </p>
+        </div>
+
+        <div class="procedural-use-card">
+          <small>IDEIA CENTRAL</small>
+          <strong>Automatizar repetição. Preservar intenção.</strong>
+          <p>As regras fazem o trabalho repetível; a curadoria decide o que merece continuar.</p>
+        </div>
+      </section>
+
+      <section class="final-cta procedural-cta">
+        <div>
+          <div class="section-kicker">Veja o resultado</div>
+          <h2>Alguns desses outputs acabam virando assets gratuitos.</h2>
+        </div>
+        <a class="button button-primary" href="/#assets">Explorar biblioteca</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <a class="brand footer-brand" href="/">
+            <span class="brand-mark">S</span>
+            <span class="brand-text">Softdown <strong>Assets</strong></span>
+          </a>
+          <p>Assets gratuitos originais produzidos com ferramentas procedurais Softdown.</p>
+        </div>
+        <div class="footer-meta">
+          <span>© {new Date().getFullYear()} Softdown Assets</span>
+          <a href="/arte-procedural/">Procedural</a>
+          <a href="/sobre-nos/">Sobre nós</a>
+          <a href="/#assets">Assets</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
