@@ -23,6 +23,7 @@ Stack atual:
 Arquivos principais:
 
 - `src/pages/index.astro` — página inicial
+- `src/pages/sobre-nos.astro` — página Sobre nós; explica a origem das ferramentas próprias e a distribuição gratuita de outputs procedurais não usados nos projetos
 - `src/styles/global.css` — sistema visual atual
 - `src/pages/assets/[slug].astro` — página individual
 - `src/lib/assets.ts` — leitura e filtragem do catálogo
@@ -53,7 +54,7 @@ Não publicar asset real apenas para “encher” a página. Primeiro acertar a 
 
 ## Conceito do catálogo
 
-Os assets podem vir de gerações das ferramentas da Softdown que não foram escolhidas para City Horizon, mas continuam com qualidade comercial.
+Os assets gratuitos podem vir de outputs procedurais de testes, validações, variações e outras etapas das ferramentas próprias da Softdown. Quando não são usados nos jogos ou projetos de origem, mas continuam úteis e apresentáveis, podem ser selecionados para distribuição gratuita no site.
 
 Fluxo planejado:
 
