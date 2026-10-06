@@ -8,7 +8,7 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="Entenda o que é arte procedural, como regras, código e workers ajudam a criar assets coerentes para jogos e como a Softdown usa esse conceito sem expor detalhes internos do pipeline."
+      content="Conheça a geração procedural: como usamos código e escolhas visuais para criar árvores, construções e outros assets para jogos."
     />
     <meta name="theme-color" content="#0a0f14" />
     <title>O que é arte procedural — Softdown Assets</title>
@@ -48,9 +48,9 @@ import "../styles/global.css";
       <section class="procedural-hero">
         <div class="procedural-hero-copy">
           <div class="eyebrow"><span></span> Arte procedural</div>
-          <h1>Desenhar com regras, código e intenção.</h1>
+          <h1>A criação começa com escolhas.</h1>
           <p>
-            Em arte procedural, o resultado não nasce somente de um desenho feito à mão. Ele nasce de um conjunto de regras, parâmetros, formas, materiais e decisões que podem ser executados e combinados por software.
+            Imagine criar uma árvore escolhendo a altura do tronco, o formato da copa e as cores das folhas. Na geração procedural, transformamos essas escolhas em regras que o programa usa para montar a imagem. Ajustando essas regras, podemos explorar novas versões da mesma ideia.
           </p>
         </div>
 
@@ -75,9 +75,9 @@ import "../styles/global.css";
       <section class="procedural-section">
         <div class="procedural-heading">
           <div class="section-kicker">O conceito</div>
-          <h2>Procedural não significa “aleatório”.</h2>
+          <h2>Variações que seguem uma ideia.</h2>
           <p>
-            Um sistema procedural usa regras para produzir resultados. Algumas regras podem incluir variação ou sementes aleatórias, mas o objetivo é manter o resultado dentro de limites definidos. Em jogos, isso pode ser usado para criar terrenos, vegetação, texturas, construções, efeitos, personagens, animações e muitos outros elementos.
+            Podemos variar os galhos de uma árvore ou as janelas de uma casa e ainda manter o estilo que escolhemos. As regras orientam essas mudanças. É uma maneira de criar terrenos, vegetação, construções e outros elementos que funcionem juntos no jogo.
           </p>
         </div>
 
@@ -128,7 +128,7 @@ import "../styles/global.css";
           <div class="section-kicker">Como fazemos</div>
           <h2>Código descreve o que deve acontecer. Ferramentas executam.</h2>
           <p>
-            Sem expor detalhes internos do nosso pipeline, podemos dizer que as ferramentas Softdown combinam tecnologias comuns de desenvolvimento e computação gráfica para transformar regras em resultados visuais.
+            Usamos ferramentas diferentes para cada parte da criação: desenhar formas, montar modelos, preparar imagens e organizar os arquivos. Cada uma ajuda a transformar a ideia em um asset que você pode usar.
           </p>
         </div>
 
@@ -150,8 +150,8 @@ import "../styles/global.css";
           </article>
           <article>
             <div class="code-chip">JSON</div>
-            <h3>Receitas e contratos</h3>
-            <p>Parâmetros estruturados ajudam diferentes etapas a entender o que deve ser produzido sem depender de instruções vagas.</p>
+            <h3>Instruções de criação</h3>
+            <p>Guardamos escolhas como tamanho, cores e direções em arquivos que as ferramentas conseguem ler. Assim, podemos ajustar uma criação e repetir o processo.</p>
           </article>
         </div>
       </section>
@@ -159,12 +159,12 @@ import "../styles/global.css";
       <section class="procedural-section workers-section">
         <div class="workers-copy">
           <div class="section-kicker">Workers</div>
-          <h2>Um worker é um especialista dentro do processo.</h2>
+          <h2>Cada tarefa tem seu lugar.</h2>
           <p>
-            Em vez de uma única ferramenta tentar fazer tudo, um pipeline pode dividir o trabalho. Um worker recebe uma tarefa bem definida, executa aquela responsabilidade e entrega seu resultado para a próxima etapa.
+            Chamamos de worker o programa que cuida de uma tarefa específica. Um prepara as imagens, outro confere os tamanhos e outro organiza o pacote para download.
           </p>
           <p>
-            Um worker pode, por exemplo, gerar uma forma, preparar uma direção, validar dimensões, montar um spritesheet, processar transparência ou criar um preview. Isso torna o processo mais organizado e permite corrigir apenas a etapa que falhou.
+            Dividir o trabalho ajuda a encontrar e corrigir problemas. Se o preview precisa de um ajuste, por exemplo, podemos refazê-lo sem gerar todo o asset novamente.
           </p>
         </div>
 
@@ -206,7 +206,7 @@ import "../styles/global.css";
 
         <aside class="coherence-note">
           <span class="section-kicker">Por isso existe a biblioteca</span>
-          <strong>Nem todo bom output entra no projeto que o gerou.</strong>
+          <strong>Uma criação pode encontrar seu lugar em outro jogo.</strong>
           <p>
             Às vezes um teste produz um resultado interessante, mas ele não combina com a linguagem visual ou com as regras daquele jogo. Quando ainda é útil e apresentável, ele pode ser preparado para distribuição gratuita aqui.
           </p>
@@ -216,23 +216,23 @@ import "../styles/global.css";
       <section class="procedural-section procedural-use">
         <div>
           <div class="section-kicker">Para que isso serve</div>
-          <h2>Procedural é uma forma de ampliar o trabalho humano, não de eliminar decisão artística.</h2>
+          <h2>As ferramentas ajudam. As escolhas continuam com quem cria.</h2>
           <p>
-            O sistema ajuda a repetir tarefas, testar variações, manter contratos técnicos e produzir famílias coerentes. Mas alguém ainda precisa decidir o que é bom, o que pertence ao projeto, o que deve ser corrigido e o que deve ser descartado.
+            O código cuida de tarefas repetidas e facilita testar novas versões. Nós escolhemos as cores, avaliamos o resultado e ajustamos o que precisa melhorar. Esse olhar acompanha a criação até a seleção do que será compartilhado.
           </p>
         </div>
 
         <div class="procedural-use-card">
           <small>IDEIA CENTRAL</small>
-          <strong>Automatizar repetição. Preservar intenção.</strong>
-          <p>As regras fazem o trabalho repetível; a curadoria decide o que merece continuar.</p>
+          <strong>Mais tempo para olhar, testar e ajustar.</strong>
+          <p>As ferramentas executam as etapas. Nós revisamos o resultado e escolhemos o que compartilhar.</p>
         </div>
       </section>
 
       <section class="final-cta procedural-cta">
         <div>
           <div class="section-kicker">Veja o resultado</div>
-          <h2>Alguns desses outputs acabam virando assets gratuitos.</h2>
+          <h2>O que criamos também pode ajudar no seu projeto.</h2>
         </div>
         <a class="button button-primary" href="/#assets">Explorar biblioteca</a>
       </section>
@@ -245,7 +245,7 @@ import "../styles/global.css";
             <span class="brand-mark">S</span>
             <span class="brand-text">Softdown <strong>Assets</strong></span>
           </a>
-          <p>Assets gratuitos originais produzidos com ferramentas procedurais Softdown.</p>
+          <p>Assets originais que criamos e compartilhamos gratuitamente.</p>
         </div>
         <div class="footer-meta">
           <span>© {new Date().getFullYear()} Softdown Assets</span>
